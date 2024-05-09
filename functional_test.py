@@ -6,14 +6,12 @@ from selenium.webdriver.common.by import By
 
 class NewVisitorTest(unittest.TestCase):
 
-    def setUp(self) -> None:
+    def setUp(self):
         self.browser = webdriver.Chrome()
-        return super().setUp()
-
-    def tearDown(self) -> None:
+        
+    def tearDown(self):
         self.browser.quit()
-        return super().tearDown()
-
+    
     def test_can_start_a_list_and_retrieve_it_later(self):
         self.browser.get('http://localhost:8000')
 
@@ -24,16 +22,18 @@ class NewVisitorTest(unittest.TestCase):
         inputbox = self.browser.find_element(By.ID, 'id_new_item')
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
+            'Enter a to-do item'
         )
 
         inputbox.send_keys('Buy flowers')
-        inputbox.send_keys(Keys.Enter)
+        inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
         table = self.browser.find_element(By.ID,'id_list_table')
-        self.assertIn('1:Buy flowerse', [row.text for row in rows])
+        rows = table.find_elements(By.TAG_NAME,'tr')
+        self.assertIn('1:Buy flowers', [row.text for row in rows])
 
         self.fail('Finish the test!')
-
+ 
 if __name__== '__main__':
     unittest.main()
