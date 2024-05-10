@@ -3,6 +3,10 @@ from django.urls import resolve
 from lists.views import home_page
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from lists.models import Item
+
+
+
 
 class HomePageTest(TestCase):
     def test_root_url_resolve_to_home_page_view(self):
