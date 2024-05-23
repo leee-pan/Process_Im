@@ -77,16 +77,14 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element(By.ID, 'id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buymilk')
+        self.wait_for_row_in_list_table('1: Buy milk')
 
         wangwu_list_url = self.browser.current_url
-        self.assertRegex(wangwu_list_url, '/lists/,+')
+        self.assertRegex(wangwu_list_url, '/lists/.+')
         self.assertNotEqual(wangwu_list_url, zhangsan_list_url)
 
         page_text = self.browser.find_element(By.TAG_NAME,'body').text
         self.assertNotIn('Buy flowers', page_text)
         self.assertIn('Buy milk', page_text)
 
-
-        self.fail('Finish the test!')
  
